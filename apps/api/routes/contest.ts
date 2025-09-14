@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { userMiddleware } from "../middleware/user";
 
 const router = Router();
 
@@ -14,11 +15,11 @@ router.get("/finished", (req, res) => {
     const {offset, page} = req.query;
 })
 
-router.get("/:contestId", (req, res) => {
+router.get("/:contestId", userMiddleware, (req, res) => {
     const contestId = req.params.contestId
 })
 
-router.get("/:contestId/:challengeId", (req, res) => {
+router.get("/:contestId/:challengeId", userMiddleware, (req, res) => {
     const contestId = req.params.contestId
 })
 
@@ -26,7 +27,7 @@ router.get("/leaderboard/:contestId", (req, res) => {
 
 })
 
-router.post("/submit/:challengeId", (req, res) => {
+router.post("/submit/:challengeId", userMiddleware, (req, res) => {
     // have rate limiting
     // max 20 submissions per problem
     // forward the request to GPT
